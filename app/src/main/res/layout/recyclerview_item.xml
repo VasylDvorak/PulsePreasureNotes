@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:alpha="0.8"
+    android:background="@color/white">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01 января 2023"
+                android:layout_marginLeft="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                app:layout_constraintStart_toStartOf="@+id/date"
+                app:layout_constraintTop_toBottomOf="@+id/date" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/hight_pressure"
+                android:layout_width="wrap_content"
+                android:maxLength="3"
+                android:layout_height="wrap_content"
+                android:contentDescription="120"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@+id/time"
+                app:layout_constraintTop_toBottomOf="@+id/time"
+                tools:text="120" />
+            <TextView
+                android:id="@+id/slash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" / "
+                android:layout_marginBottom="10sp"
+                android:textSize="28sp"
+                app:layout_constraintStart_toEndOf="@+id/hight_pressure"
+                app:layout_constraintBottom_toBottomOf="@+id/hight_pressure" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/low_pressure"
+                android:layout_width="wrap_content"
+                android:maxLength="3"
+                android:layout_height="wrap_content"
+                android:contentDescription="80"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@+id/slash"
+                app:layout_constraintTop_toBottomOf="@+id/time"
+                tools:text="80" />
+            <ImageView
+                android:id="@+id/hart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_favorite_gray"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@+id/low_pressure"
+                app:layout_constraintTop_toBottomOf="@+id/time" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/pulse"
+                android:layout_width="wrap_content"
+                android:maxLength="3"
+                android:layout_height="wrap_content"
+                android:contentDescription="60"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:layout_marginLeft="10dp"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@+id/hart"
+                app:layout_constraintTop_toBottomOf="@+id/time"
+                tools:text="60" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <ImageButton
+        android:id="@+id/approve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_button"
+        android:contentDescription="Подтвердить"
+        android:elevation="15dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/baseline_done_24"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/card_view"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
