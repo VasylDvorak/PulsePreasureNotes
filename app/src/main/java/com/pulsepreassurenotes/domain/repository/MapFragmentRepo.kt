@@ -1,20 +1,18 @@
 package com.pulsepreassurenotes.domain.repository
 
-import com.pulsepreassurenotes.delegates.SharedPreferencesDelegate
+import com.pulsepreassurenotes.delegates.FireBaseDatabaseDelegate
 import com.pulsepreassurenotes.model.Record
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.Calendar
 
-const val LIST_KEY = "LIST_KEY"
-
 class MapFragmentRepo : IMapFragmentRepo {
-    var listFromSharedPreferences: MutableList<Record> by SharedPreferencesDelegate(LIST_KEY)
+    var listFireBaseDatabase: MutableList<Record> by FireBaseDatabaseDelegate()
     private var listRecords: MutableList<Record> = mutableListOf()
 
     override fun getMarkers(): Single<MutableList<Record>> {
-        if (!listFromSharedPreferences.isNullOrEmpty()) {
-            listRecords = listFromSharedPreferences
+        if (!listFireBaseDatabase.isNullOrEmpty()) {
+            listRecords = listFireBaseDatabase
         } else {
             listRecords = mutableListOf()
         }
@@ -38,7 +36,7 @@ class MapFragmentRepo : IMapFragmentRepo {
     }
 
     override fun saveListMarkers() {
-        listFromSharedPreferences = listRecords
+        listFireBaseDatabase = listRecords
     }
 
     override fun onCorrectionClick(i: Int, marker: Record) {
