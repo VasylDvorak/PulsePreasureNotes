@@ -37,7 +37,7 @@ class ItemTouchHelperCallback(private val callback: ItemTouchHelperAdapter) :
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         viewHolder?.let {
-            (it as ListMarkersAdapter.RecyclerItemViewHolder).onItemSelected()
+            (it as ListAdapter.RecyclerItemViewHolder).onItemSelected()
         }
         super.onSelectedChanged(viewHolder, actionState)
     }
@@ -45,7 +45,7 @@ class ItemTouchHelperCallback(private val callback: ItemTouchHelperAdapter) :
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
 
-        (viewHolder as ListMarkersAdapter.RecyclerItemViewHolder).onItemRelease()
+        (viewHolder as ListAdapter.RecyclerItemViewHolder).onItemRelease()
     }
 
 }

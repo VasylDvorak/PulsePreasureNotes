@@ -1,19 +1,3 @@
 
-F
-app/proguard-rules.pro,9\e\9e08934d811afe28fbc77aaa3c0d747b94348db9
 >
 app/.gitignore,5\1\51e1c5d383dfaa35e0e7e5873a0a99355a86880f
-l
-<app/src/main/java/com/pulsepreassurenotes/application/App.kt,e\a\ea0c646a20e93ab513719534a756bf5a50dc2691
-v
-Fapp/src/main/java/com/pulsepreassurenotes/di/koin_modules/AppModule.kt,5\7\5730e5d446b94fb81154e6ce843a5df96f490871
-r
-Bapp/src/main/java/com/pulsepreassurenotes/di/ConnectKoinModules.kt,1\b\1bd0a3739ec324857ee929259edfb69012e4a156
-r
-Bapp/src/main/java/com/pulsepreassurenotes/view/ViewByIdDelegate.kt,a\4\a4e70a00aa400f6705f442abe7a8c3c0c1bff417
-u
-Eapp/src/main/java/com/pulsepreassurenotes/domain/view_MVP/MainView.kt,8\1\813510e125dfac7725c2214c5fc2d38234382f91
-€
-Papp/src/main/java/com/pulsepreassurenotes/view/markers/ItemTouchHelperAdapter.kt,b\0\b0df7ddfe943ee4a9ff3a4ab153712d6cf834baa
-
-Qapp/src/main/java/com/pulsepreassurenotes/view/markers/ItemTouchHelperCallback.kt,9\4\9445357b8417cd86e1e7402076b4cf368eda237f

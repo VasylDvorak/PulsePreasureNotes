@@ -11,7 +11,9 @@ import com.google.firebase.ktx.Firebase
 import com.pulsepreassurenotes.model.Record
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
+
 const val REFERENCE = "recoder"
+
 class FireBaseDatabaseDelegate() :
     ReadWriteProperty<Any?, MutableList<Record>?> {
     override fun getValue(thisRef: Any?, property: KProperty<*>): MutableList<Record> {
@@ -22,13 +24,15 @@ class FireBaseDatabaseDelegate() :
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val listDataType = object : GenericTypeIndicator<List<Record>>() {}
-                val listData = snapshot.getValue(listDataType)?: mutableListOf()
+                val listData = snapshot.getValue(listDataType) ?: mutableListOf()
                 output = listData.toMutableList()
             }
+
             override fun onCancelled(error: DatabaseError) {
                 Log.w(
                     ContentValues.TAG, "ErrorFireBase",
-                    error.toException())
+                    error.toException()
+                )
             }
 
         })
@@ -40,9 +44,10 @@ class FireBaseDatabaseDelegate() :
         property: KProperty<*>,
         value: MutableList<Record>?
     ) {
+
         val database = Firebase.database
         val myRef = database.getReference(REFERENCE)
         myRef.setValue(value)
-        }
-
     }
+
+}

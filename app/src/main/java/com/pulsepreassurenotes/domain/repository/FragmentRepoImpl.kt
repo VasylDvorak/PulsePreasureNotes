@@ -6,11 +6,11 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.Calendar
 
-class MapFragmentRepo : IMapFragmentRepo {
+class FragmentRepoImpl : FragmentRepo {
     var listFireBaseDatabase: MutableList<Record> by FireBaseDatabaseDelegate()
     private var listRecords: MutableList<Record> = mutableListOf()
 
-    override fun getMarkers(): Single<MutableList<Record>> {
+    override fun getRecords(): Single<MutableList<Record>> {
         if (!listFireBaseDatabase.isNullOrEmpty()) {
             listRecords = listFireBaseDatabase
         } else {
@@ -20,7 +20,7 @@ class MapFragmentRepo : IMapFragmentRepo {
         return Single.fromCallable { output }.subscribeOn(Schedulers.io())
     }
 
-    override fun addMarkerOnMap(): MutableList<Record> {
+    override fun addRecord(): MutableList<Record> {
         val calendar = Calendar.getInstance()
         listRecords.add(
             Record(
@@ -35,12 +35,12 @@ class MapFragmentRepo : IMapFragmentRepo {
         return listRecords
     }
 
-    override fun saveListMarkers() {
+    override fun saveListRecords() {
         listFireBaseDatabase = listRecords
     }
 
-    override fun onCorrectionClick(i: Int, marker: Record) {
-        listRecords[i] = marker
+    override fun onCorrectionClick(i: Int, record: Record) {
+        listRecords[i] = record
     }
 
     override fun onRemove(i: Int): MutableList<Record> {
@@ -49,6 +49,7 @@ class MapFragmentRepo : IMapFragmentRepo {
     }
 
     private fun getMonthName(number: Int) = listOf(
-            "январь", "февраль", "март", "апрель", "май", "июнь",
-            "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь")[number]
+        "январь", "февраль", "март", "апрель", "май", "июнь",
+        "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
+    )[number]
 }

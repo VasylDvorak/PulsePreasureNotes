@@ -1,22 +1,21 @@
 package com.pulsepreassurenotes.domain.presenters
 
 
-import com.google.android.gms.maps.model.MarkerOptions
-import com.pulsepreassurenotes.domain.repository.IMapFragmentRepo
-import com.pulsepreassurenotes.domain.repository.MapFragmentRepo
-import com.pulsepreassurenotes.domain.view_MVP.MapFragmentView
+import com.pulsepreassurenotes.domain.repository.FragmentRepo
+import com.pulsepreassurenotes.domain.repository.FragmentRepoImpl
+import com.pulsepreassurenotes.domain.view_MVP.IFragmentView
 import com.pulsepreassurenotes.model.Record
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import moxy.MvpPresenter
 
-class ListMarkersPresenter : MvpPresenter<MapFragmentView>() {
+class ListRecordsPresenter : MvpPresenter<IFragmentView>() {
 
 
     private val mainThreadScheduler: Scheduler = AndroidSchedulers.mainThread()
 
-    private var listMarkersRepo: IMapFragmentRepo = MapFragmentRepo()
+    private var listRecordsRepo: FragmentRepo = FragmentRepoImpl()
 
 
     public override fun onFirstViewAttach() {
@@ -25,15 +24,15 @@ class ListMarkersPresenter : MvpPresenter<MapFragmentView>() {
 
     }
 
-    lateinit var callMenuRepo: Single<MutableList<Record>>
+    lateinit var callRecordsRepo: Single<MutableList<Record>>
     fun loadMarkers() {
-        callMenuRepo = listMarkersRepo.getMarkers() ?: Single.just(mutableListOf())
-        loadMarkersJavaRx()
+        callRecordsRepo = listRecordsRepo.getRecords() ?: Single.just(mutableListOf())
+        loadRecordsJavaRx()
     }
 
 
-    fun loadMarkersJavaRx() {
-        callMenuRepo
+    fun loadRecordsJavaRx() {
+        callRecordsRepo
             .observeOn(mainThreadScheduler)
             .subscribe({ markers ->
                 if (!markers.isNullOrEmpty()) {
@@ -47,23 +46,21 @@ class ListMarkersPresenter : MvpPresenter<MapFragmentView>() {
     }
 
     fun onCorrectionClick(i: Int, marker: Record) {
-        listMarkersRepo.onCorrectionClick(i, marker)
+        listRecordsRepo.onCorrectionClick(i, marker)
     }
 
-    fun onRemove(i: Int): MutableList<Record> = listMarkersRepo.onRemove(i)
+    fun onRemove(i: Int): MutableList<Record> = listRecordsRepo.onRemove(i)
 
-    fun saveListMarkers() {
-        callMenuRepo
+    fun saveListRecords() {
+        callRecordsRepo
             .observeOn(mainThreadScheduler)
             .subscribe({ markers ->
-                listMarkersRepo.saveListMarkers()
+                listRecordsRepo.saveListRecords()
             }, {
 
             })
-
-      //  listMarkersRepo.saveListMarkers()
     }
 
-    fun addNote(): MutableList<Record> = listMarkersRepo.addMarkerOnMap()
+    fun addRecord(): MutableList<Record> = listRecordsRepo.addRecord()
 
 }

@@ -4,24 +4,23 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.maps.model.MarkerOptions
-import com.pulsepreassurenotes.domain.presenters.ListMarkersPresenter
+import com.pulsepreassurenotes.domain.presenters.ListRecordsPresenter
 import com.pulsepreassurenotes.model.Record
 import com.pulsepreassurenotes.view.BaseFragment
 import com.pulsepreassurenotes.view.viewById
 import com.pulsepreasurenotes.R
-import com.pulsepreasurenotes.databinding.FragmentListMarkersBinding
+import com.pulsepreasurenotes.databinding.FragmentListBinding
 import moxy.ktx.moxyPresenter
 
-class ListMarkersFragment : BaseFragment<FragmentListMarkersBinding>(
-    FragmentListMarkersBinding::inflate
+class ListFragment : BaseFragment<FragmentListBinding>(
+    FragmentListBinding::inflate
 ) {
 
-    val presenter: ListMarkersPresenter by moxyPresenter { ListMarkersPresenter() }
+    val presenter: ListRecordsPresenter by moxyPresenter { ListRecordsPresenter() }
     private val listMarkersRecyclerview by viewById<RecyclerView>(R.id.list_markers_recyclerview)
 
-    private val adapter: ListMarkersAdapter by lazy {
-        ListMarkersAdapter(
+    private val adapter: ListAdapter by lazy {
+        ListAdapter(
             ::onCorrectionClick,
             ::onRemove
         )
@@ -39,7 +38,7 @@ class ListMarkersFragment : BaseFragment<FragmentListMarkersBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.addRecord.setOnClickListener {
-            setDataToAdapter(presenter.addNote())
+            setDataToAdapter(presenter.addRecord())
         }
     }
 
@@ -51,8 +50,8 @@ class ListMarkersFragment : BaseFragment<FragmentListMarkersBinding>(
         presenter.loadMarkers()
     }
 
-    override fun loadMarkers(markers: MutableList<Record>) {
-        setDataToAdapter(markers)
+    override fun loadMarkers(records: MutableList<Record>) {
+        setDataToAdapter(records)
     }
 
 
@@ -61,11 +60,11 @@ class ListMarkersFragment : BaseFragment<FragmentListMarkersBinding>(
     }
 
     override fun onPause() {
-        presenter.saveListMarkers()
+        presenter.saveListRecords()
         super.onPause()
     }
 
     companion object {
-        fun newInstance() = ListMarkersFragment()
+        fun newInstance() = ListFragment()
     }
 }
