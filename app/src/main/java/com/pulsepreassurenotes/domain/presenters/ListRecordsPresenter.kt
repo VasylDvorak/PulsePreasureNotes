@@ -6,11 +6,11 @@ import com.pulsepreassurenotes.domain.repository.FragmentRepoImpl
 import com.pulsepreassurenotes.domain.view_MVP.IFragmentView
 import com.pulsepreassurenotes.model.Record
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 
-const val REFERENCE = "recoder"
 
 class ListRecordsPresenter : MvpPresenter<IFragmentView>() {
 
@@ -20,49 +20,32 @@ class ListRecordsPresenter : MvpPresenter<IFragmentView>() {
     private var listRecordsRepo: FragmentRepo = FragmentRepoImpl(::loadDataFireBase)
 
     private fun loadDataFireBase(records: MutableList<Record>) {
-        viewState.loadMarkers(records)
+        viewState.loadRecords(records)
     }
-
 
     public override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-
     }
 
-    lateinit var callRecordsRepo: Single<MutableList<Record>>
     fun loadMarkers() {
-        callRecordsRepo = Single.just(mutableListOf())
-        loadRecordsJavaRx()
-    }
-
-
-    fun loadRecordsJavaRx() {
-
-
-        callRecordsRepo
+        Observable.just(listRecordsRepo.loadListRecordsFromfireBaseDatabase())
+            .subscribeOn(Schedulers.io())
             .observeOn(mainThreadScheduler)
-            .subscribe({ markers ->
-                listRecordsRepo.loadListRecordsFromfireBaseDatabase()
-            }, {
-                viewState.loadMarkers(mutableListOf())
-            })
     }
 
     fun onCorrectionClick(i: Int, marker: Record) {
-        listRecordsRepo.onCorrectionClick(i, marker)
+        Observable.just(listRecordsRepo.onCorrectionClick(i, marker))
+            .subscribeOn(Schedulers.io())
+            .observeOn(mainThreadScheduler)
     }
 
     fun onRemove(i: Int): MutableList<Record> = listRecordsRepo.onRemove(i)
 
     fun saveListRecords() {
-        callRecordsRepo
+        Observable.just(listRecordsRepo.saveListRecords())
+            .subscribeOn(Schedulers.io())
             .observeOn(mainThreadScheduler)
-            .subscribe({ markers ->
-                listRecordsRepo.saveListRecords()
-            }, {
-
-            })
     }
 
     fun addRecord(): MutableList<Record> = listRecordsRepo.addRecord()

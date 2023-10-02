@@ -3,7 +3,7 @@ package com.pulsepreassurenotes.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.pulsepreassurenotes.view.markers.ListFragment
+import com.pulsepreassurenotes.view.list_records.ListFragment
 import com.pulsepreasurenotes.R
 import com.pulsepreasurenotes.databinding.ActivityMainBinding
 

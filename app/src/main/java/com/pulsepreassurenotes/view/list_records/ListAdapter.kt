@@ -1,4 +1,4 @@
-package com.pulsepreassurenotes.view.markers
+package com.pulsepreassurenotes.view.list_records
 
 import android.content.Context
 import android.text.Editable

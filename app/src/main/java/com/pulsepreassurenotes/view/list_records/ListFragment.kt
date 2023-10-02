@@ -1,4 +1,4 @@
-package com.pulsepreassurenotes.view.markers
+package com.pulsepreassurenotes.view.list_records
 
 import android.os.Bundle
 import android.view.View
@@ -50,7 +50,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(
         )
     }
 
-    override fun loadMarkers(records: MutableList<Record>) {
+    override fun loadRecords(records: MutableList<Record>) {
         setDataToAdapter(records)
     }
 

@@ -9,5 +9,5 @@ interface FragmentRepo {
     fun onCorrectionClick(i: Int, record: Record)
     fun onRemove(i: Int): MutableList<Record>
     fun setListRecords(newListRecords: MutableList<Record>)
-    fun loadListRecordsFromfireBaseDatabase()
+    fun loadListRecordsFromfireBaseDatabase(): MutableList<Record>
 }

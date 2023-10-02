@@ -24,6 +24,4 @@ F
 
 Qapp/src/main/java/com/pulsepreassurenotes/view/markers/ItemTouchHelperCallback.kt,9\4\9445357b8417cd86e1e7402076b4cf368eda237f
 n
->app/src/main/java/com/pulsepreassurenotes/view/MainActivity.kt,a\b\abce1fd3e599332a96bfb1f7d2ef0ab42abc07f8
-n
 >app/src/main/java/com/pulsepreassurenotes/view/BaseFragment.kt,2\a\2a53afc1ca1484c4bca0c477b2bde4608a6ca4c0

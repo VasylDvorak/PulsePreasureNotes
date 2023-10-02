@@ -14,18 +14,23 @@ import kotlin.reflect.KProperty
 
 const val REFERENCE = "recoder"
 
-class FireBaseDatabaseDelegate() :
+class FireBaseDatabaseDelegate(private var loadDataFirebaseCallback: (MutableList<Record>) -> Unit) :
     ReadWriteProperty<Any?, MutableList<Record>?> {
-    override fun getValue(thisRef: Any?, property: KProperty<*>): MutableList<Record> {
 
-        val database = Firebase.database
-        val myRef = database.getReference(REFERENCE)
-        var output = mutableListOf<Record>()
-        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
+    private val database = Firebase.database
+    private val myRef = database.getReference(REFERENCE)
+
+    init {
+        myRef.keepSynced(true)
+    }
+
+    override fun getValue(thisRef: Any?, property: KProperty<*>): MutableList<Record> {
+        val output = mutableListOf<Record>()
+        myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val listDataType = object : GenericTypeIndicator<List<Record>>() {}
                 val listData = snapshot.getValue(listDataType) ?: mutableListOf()
-                output = listData.toMutableList()
+                loadDataFirebaseCallback(listData.toMutableList())
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -44,10 +49,8 @@ class FireBaseDatabaseDelegate() :
         property: KProperty<*>,
         value: MutableList<Record>?
     ) {
-
-        val database = Firebase.database
-        val myRef = database.getReference(REFERENCE)
-        myRef.setValue(value)
+        if (!value.isNullOrEmpty()) {
+            myRef.setValue(value.toList())
+        }
     }
-
 }

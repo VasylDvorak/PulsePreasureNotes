@@ -8,5 +8,5 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface IFragmentView : MvpView {
     fun init()
-    fun loadMarkers(records: MutableList<Record>)
+    fun loadRecords(records: MutableList<Record>)
 }
