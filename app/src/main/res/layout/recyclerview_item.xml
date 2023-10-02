@@ -110,7 +110,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/rounded_button"
-        android:contentDescription="Подтвердить"
+        android:contentDescription="@string/approve"
         android:elevation="15dp"
         android:importantForAccessibility="no"
         android:src="@drawable/baseline_done_24"

@@ -19,6 +19,7 @@
         android:id="@+id/add_record"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:contentDescription="@string/add_record"
         android:background="@drawable/add_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

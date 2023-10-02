@@ -1,7 +1,10 @@
 package com.pulsepreassurenotes.domain.repository
 
+import android.content.Context
 import com.pulsepreassurenotes.delegates.FireBaseDatabaseDelegate
 import com.pulsepreassurenotes.model.Record
+import com.pulsepreasurenotes.R
+import org.koin.java.KoinJavaComponent.getKoin
 import java.util.Calendar
 
 class FragmentRepoImpl(
@@ -47,8 +50,20 @@ class FragmentRepoImpl(
         return listRecordsTemp
     }
 
-    private fun getMonthName(number: Int) = listOf(
-        "январь", "февраль", "март", "апрель", "май", "июнь",
-        "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
-    )[number]
+    private fun getMonthName(number: Int): String {
+        val context = getKoin().get<Context>()
+        return listOf(
+            context.getString(R.string.january),
+            context.getString(R.string.february),
+            context.getString(R.string.march),
+            context.getString(R.string.april),
+            context.getString(R.string.may),
+            context.getString(R.string.june),
+            context.getString(R.string.july),
+            context.getString(R.string.august),
+            context.getString(R.string.september),
+            context.getString(R.string.october),
+            context.getString(R.string.november),
+            context.getString(R.string.december))[number]
+    }
 }

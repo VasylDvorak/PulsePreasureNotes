@@ -15,12 +15,8 @@ Eapp/src/main/java/com/pulsepreassurenotes/domain/view_MVP/MainView.kt,8\1\8135
 Papp/src/main/java/com/pulsepreassurenotes/view/markers/ItemTouchHelperAdapter.kt,b\0\b0df7ddfe943ee4a9ff3a4ab153712d6cf834baa
 r
 Bapp/src/main/java/com/pulsepreassurenotes/view/ViewByIdDelegate.kt,a\4\a4e70a00aa400f6705f442abe7a8c3c0c1bff417
-D
-app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
 F
 app/proguard-rules.pro,9\e\9e08934d811afe28fbc77aaa3c0d747b94348db9
-@
-build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
 Å
 Qapp/src/main/java/com/pulsepreassurenotes/view/markers/ItemTouchHelperCallback.kt,9\4\9445357b8417cd86e1e7402076b4cf368eda237f
 n
