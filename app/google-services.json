@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "827228848355",
+    "project_id": "pulsepreasurenotesproject",
+    "storage_bucket": "pulsepreasurenotesproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827228848355:android:18e8f55d959b69353305d6",
+        "android_client_info": {
+          "package_name": "com.pulsepreasurenotes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-RQE7OhInmQvm66XDBqNWJe7bglO5Iq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

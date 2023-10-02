@@ -24,6 +24,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout"
+            android:background="@color/material_dynamic_tertiary90"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -108,7 +110,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/rounded_button"
-        android:contentDescription="Подтвердить"
+        android:contentDescription="@string/approve"
         android:elevation="15dp"
         android:importantForAccessibility="no"
         android:src="@drawable/baseline_done_24"

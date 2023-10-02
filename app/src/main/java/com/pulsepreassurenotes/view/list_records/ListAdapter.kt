@@ -1,4 +1,4 @@
-package com.pulsepreassurenotes.view.markers
+package com.pulsepreassurenotes.view.list_records
 
 import android.content.Context
 import android.text.Editable
@@ -17,10 +17,10 @@ import com.pulsepreassurenotes.model.Record
 import com.pulsepreasurenotes.R
 import com.pulsepreasurenotes.databinding.RecyclerviewItemBinding
 
-class ListMarkersAdapter(
+class ListAdapter(
     private var correctClickListener: (Int, Record) -> Unit,
     private var callbackRemove: (Int, Record) -> Unit
-) : RecyclerView.Adapter<ListMarkersAdapter.RecyclerItemViewHolder>(), ItemTouchHelperAdapter {
+) : RecyclerView.Adapter<ListAdapter.RecyclerItemViewHolder>(), ItemTouchHelperAdapter {
 
     private var data: MutableList<Record> = mutableListOf()
     fun setData(data: MutableList<Record>) {
@@ -66,13 +66,22 @@ class ListMarkersAdapter(
 
                 itemView.apply {
                     binding.apply {
+                        if (layoutPosition % 2 == 0) {
+                            layout.setBackgroundColor(
+                                ContextCompat.getColor(
+                                    itemView.context,
+                                    R.color.yellow
+                                )
+                            )
+                        }
                         cardView.setCardBackgroundColor(resources.getColor(R.color.white))
                         hightPressure.setText(data.hightPressue.toString())
                         lowPressure.setText(data.lowPressure.toString())
                         pulse.setText(data.pulse.toString())
-                        time.text = if(data.hours!! <= 9) "0" else "" + data.hours.toString() +
-                                ":"+if(data.minutes!! <= 9) "0" else "" + data.minutes.toString()
-                        date.text = data.date.toString() + " " + data.month + " " + data.year.toString()
+                        time.text = if (data.hours!! <= 9) "0" else "" + data.hours.toString() +
+                                ":" + if (data.minutes!! <= 9) "0" else "" + data.minutes.toString()
+                        date.text =
+                            data.date.toString() + " " + data.month + " " + data.year.toString()
                         approve.visibility = View.GONE
                         hightPressure.inputType = InputType.TYPE_NULL
                         lowPressure.inputType = InputType.TYPE_NULL
@@ -116,7 +125,7 @@ class ListMarkersAdapter(
         layoutPosition: Int,
         titleCorrect: String
     ) {
-val editData = data[layoutPosition]
+        val editData = data[layoutPosition]
         editTextView.inputType = InputType.TYPE_CLASS_PHONE or InputType.TYPE_NUMBER_FLAG_DECIMAL
         apply.visibility = View.VISIBLE
         var newText = editTextView.text.toString()
@@ -139,8 +148,10 @@ val editData = data[layoutPosition]
             })
             apply.setOnClickListener {
 
-                newText =newText.replace("[^\\d]".toRegex(), "")
-                if(newText=="") {newText ="0"}
+                newText = newText.replace("[^\\d]".toRegex(), "")
+                if (newText == "") {
+                    newText = "0"
+                }
                 newText.toInt().toString()
                 editTextView.setText(newText)
 
@@ -149,18 +160,20 @@ val editData = data[layoutPosition]
                 editTextView.inputType = InputType.TYPE_NULL
                 changeRecordItem(layoutPosition, data[layoutPosition])
 
-                when(titleCorrect){
+                when (titleCorrect) {
                     "hightPressure" -> {
                         editData.hightPressue = newText.toInt()
-                        data[layoutPosition]=editData
+                        data[layoutPosition] = editData
                     }
-                    "lowPressure" ->{
+
+                    "lowPressure" -> {
                         editData.lowPressure = newText.toInt()
-                        data[layoutPosition]=editData
+                        data[layoutPosition] = editData
                     }
+
                     "pulse" -> {
                         editData.pulse = newText.toInt()
-                        data[layoutPosition]=editData
+                        data[layoutPosition] = editData
                     }
 
                 }
