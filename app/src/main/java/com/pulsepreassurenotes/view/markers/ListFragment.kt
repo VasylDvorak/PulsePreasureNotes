@@ -30,13 +30,14 @@ class ListFragment : BaseFragment<FragmentListBinding>(
         presenter.onCorrectionClick(i, marker)
     }
 
-    private fun onRemove(i: Int, marker: Record) {
+    private fun onRemove(i: Int, record: Record) {
         setDataToAdapter(presenter.onRemove(i))
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter.loadMarkers()
         binding.addRecord.setOnClickListener {
             setDataToAdapter(presenter.addRecord())
         }
@@ -47,7 +48,6 @@ class ListFragment : BaseFragment<FragmentListBinding>(
         ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(
             listMarkersRecyclerview
         )
-        presenter.loadMarkers()
     }
 
     override fun loadMarkers(records: MutableList<Record>) {
@@ -59,11 +59,10 @@ class ListFragment : BaseFragment<FragmentListBinding>(
         adapter.setData(data)
     }
 
-    override fun onPause() {
+    override fun onDestroy() {
         presenter.saveListRecords()
-        super.onPause()
+        super.onDestroy()
     }
-
     companion object {
         fun newInstance() = ListFragment()
     }

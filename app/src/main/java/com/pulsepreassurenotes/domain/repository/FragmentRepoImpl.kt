@@ -1,30 +1,56 @@
 package com.pulsepreassurenotes.domain.repository
 
-import com.pulsepreassurenotes.delegates.FireBaseDatabaseDelegate
+import android.content.ContentValues
+import android.util.Log
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.GenericTypeIndicator
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.pulsepreassurenotes.model.Record
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.Calendar
 
-class FragmentRepoImpl : FragmentRepo {
-    var listFireBaseDatabase: MutableList<Record> by FireBaseDatabaseDelegate()
-    private var listRecords: MutableList<Record> = mutableListOf()
+const val REFERENCE = "recoder"
 
-    override fun getRecords(): Single<MutableList<Record>> {
-        if (!listFireBaseDatabase.isNullOrEmpty()) {
-            listRecords = listFireBaseDatabase
-        } else {
-            listRecords = mutableListOf()
-        }
-        val output = listRecords
-        return Single.fromCallable { output }.subscribeOn(Schedulers.io())
+class FragmentRepoImpl(
+    private var loadDataFirebaseCallback: (MutableList<Record>) -> Unit
+) : FragmentRepo {
+
+    var listRecordsTemp: MutableList<Record> = mutableListOf()
+
+    override fun setListRecords(newListRecords: MutableList<Record>) {
+        listRecordsTemp = newListRecords
+    }
+
+    override fun loadListRecordsFromfireBaseDatabase() {
+        val database = Firebase.database
+        var myRef = database.getReference(com.pulsepreassurenotes.domain.presenters.REFERENCE)
+        myRef.keepSynced(true)
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val listDataType = object : GenericTypeIndicator<List<Record>>() {}
+                val listData = snapshot.getValue(listDataType) ?: mutableListOf()
+                listRecordsTemp = listData.toMutableList()
+                changeRecordItem()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                ///  viewState.loadMarkers(mutableListOf())
+                Log.w(
+                    ContentValues.TAG, "ErrorFireBase",
+                    error.toException()
+                )
+            }
+
+        })
+
     }
 
     override fun addRecord(): MutableList<Record> {
         val calendar = Calendar.getInstance()
-        listRecords.add(
+        listRecordsTemp.add(
             Record(
-                id = listRecords.size,
                 year = calendar.get(Calendar.YEAR),
                 month = getMonthName(calendar.get(Calendar.MONTH)),
                 date = calendar.get(Calendar.DAY_OF_MONTH),
@@ -32,24 +58,33 @@ class FragmentRepoImpl : FragmentRepo {
                 minutes = calendar.get(Calendar.MINUTE)
             )
         )
-        return listRecords
+        return listRecordsTemp
     }
 
     override fun saveListRecords() {
-        listFireBaseDatabase = listRecords
+        val database = Firebase.database
+        var myRef = database.getReference(REFERENCE)
+        myRef.keepSynced(true)
+        if (!listRecordsTemp.isNullOrEmpty()) {
+            myRef.setValue(listRecordsTemp.toList())
+        }
     }
 
     override fun onCorrectionClick(i: Int, record: Record) {
-        listRecords[i] = record
+        listRecordsTemp[i] = record
     }
 
     override fun onRemove(i: Int): MutableList<Record> {
-        listRecords.removeAt(i)
-        return listRecords
+        listRecordsTemp.removeAt(i)
+        return listRecordsTemp
     }
 
     private fun getMonthName(number: Int) = listOf(
         "январь", "февраль", "март", "апрель", "май", "июнь",
         "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
     )[number]
+
+    private fun changeRecordItem() {
+        loadDataFirebaseCallback(listRecordsTemp)
+    }
 }

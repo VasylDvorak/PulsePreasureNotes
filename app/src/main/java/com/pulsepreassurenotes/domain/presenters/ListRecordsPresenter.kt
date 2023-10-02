@@ -10,12 +10,18 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import moxy.MvpPresenter
 
+const val REFERENCE = "recoder"
+
 class ListRecordsPresenter : MvpPresenter<IFragmentView>() {
 
 
     private val mainThreadScheduler: Scheduler = AndroidSchedulers.mainThread()
 
-    private var listRecordsRepo: FragmentRepo = FragmentRepoImpl()
+    private var listRecordsRepo: FragmentRepo = FragmentRepoImpl(::loadDataFireBase)
+
+    private fun loadDataFireBase(records: MutableList<Record>) {
+        viewState.loadMarkers(records)
+    }
 
 
     public override fun onFirstViewAttach() {
@@ -26,20 +32,18 @@ class ListRecordsPresenter : MvpPresenter<IFragmentView>() {
 
     lateinit var callRecordsRepo: Single<MutableList<Record>>
     fun loadMarkers() {
-        callRecordsRepo = listRecordsRepo.getRecords() ?: Single.just(mutableListOf())
+        callRecordsRepo = Single.just(mutableListOf())
         loadRecordsJavaRx()
     }
 
 
     fun loadRecordsJavaRx() {
+
+
         callRecordsRepo
             .observeOn(mainThreadScheduler)
             .subscribe({ markers ->
-                if (!markers.isNullOrEmpty()) {
-                    viewState.loadMarkers(markers)
-                } else {
-                    viewState.loadMarkers(mutableListOf())
-                }
+                listRecordsRepo.loadListRecordsFromfireBaseDatabase()
             }, {
                 viewState.loadMarkers(mutableListOf())
             })

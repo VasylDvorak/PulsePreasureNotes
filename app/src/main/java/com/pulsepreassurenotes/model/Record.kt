@@ -5,7 +5,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Record(
-    var id: Int? = 0,
     var lowPressure: Int? = 80,
     var hightPressue: Int? = 120,
     var pulse: Int? = 60,

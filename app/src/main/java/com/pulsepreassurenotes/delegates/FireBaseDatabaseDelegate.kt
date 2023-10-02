@@ -21,7 +21,7 @@ class FireBaseDatabaseDelegate() :
         val database = Firebase.database
         val myRef = database.getReference(REFERENCE)
         var output = mutableListOf<Record>()
-        myRef.addValueEventListener(object : ValueEventListener {
+        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val listDataType = object : GenericTypeIndicator<List<Record>>() {}
                 val listData = snapshot.getValue(listDataType) ?: mutableListOf()
