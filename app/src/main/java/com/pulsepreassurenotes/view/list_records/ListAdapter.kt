@@ -190,6 +190,7 @@ class ListAdapter(
                 context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             return inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
         } catch (ignored: RuntimeException) {
+            println("Exeption keybord")
         }
         return false
     }

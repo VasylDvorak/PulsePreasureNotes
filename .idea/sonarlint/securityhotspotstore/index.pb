@@ -17,3 +17,11 @@ F
 app/proguard-rules.pro,9\e\9e08934d811afe28fbc77aaa3c0d747b94348db9
 n
 >app/src/main/java/com/pulsepreassurenotes/view/BaseFragment.kt,2\a\2a53afc1ca1484c4bca0c477b2bde4608a6ca4c0
+i
+9app/src/main/java/com/pulsepreassurenotes/model/Record.kt,0\3\03843c9c312c11ae32d655fa4f662a0ce86bff7c
+
+Oapp/src/main/java/com/pulsepreassurenotes/domain/repository/FragmentRepoImpl.kt,9\8\981ec0c99cc0e6d480fdf853d4c5db20666db7b9
+{
+Kapp/src/main/java/com/pulsepreassurenotes/domain/repository/FragmentRepo.kt,0\d\0d967c6593a32441163ea66bc3bace12211e6f77
+…
+Uapp/src/main/java/com/pulsepreassurenotes/view/list_records/ItemTouchHelperAdapter.kt,a\3\a35bc8ae0a5ab6cd2e9e4b80d3873e48ecbfe501
