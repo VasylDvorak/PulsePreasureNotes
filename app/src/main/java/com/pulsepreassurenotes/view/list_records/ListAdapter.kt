@@ -78,8 +78,10 @@ class ListAdapter(
                         hightPressure.setText(data.hightPressue.toString())
                         lowPressure.setText(data.lowPressure.toString())
                         pulse.setText(data.pulse.toString())
-                        time.text = if (data.hours!! <= 9) "0" else "" + data.hours.toString() +
-                                ":" + if (data.minutes!! <= 9) "0" else "" + data.minutes.toString()
+                        val hoursPrefix = if (data.hours!! <= 9) "0" else ""
+                        val minutesPrefix = if (data.minutes!! <= 9) "0" else ""
+                        time.text = hoursPrefix + data.hours.toString() +
+                                ":" + minutesPrefix + data.minutes.toString()
                         date.text =
                             data.date.toString() + " " + data.month + " " + data.year.toString()
                         approve.visibility = View.GONE
