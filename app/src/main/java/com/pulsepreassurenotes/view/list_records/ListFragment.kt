@@ -59,9 +59,9 @@ class ListFragment : BaseFragment<FragmentListBinding>(
         adapter.setData(data)
     }
 
-    override fun onDestroy() {
+    override fun onPause() {
         presenter.saveListRecords()
-        super.onDestroy()
+        super.onPause()
     }
     companion object {
         fun newInstance() = ListFragment()
